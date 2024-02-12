@@ -14,6 +14,8 @@ let users = [
     {id:3,name:"Valdez"},
 ]
 
+const o = {id:"Hola", nombre:"DSFDS"}
+
 app.get('/', (req, res) => {
   res.send(users)
 })
@@ -24,21 +26,22 @@ app.get('/getOnlyUser', (req, res) => {
     res.send(user)
   })
 
-app.get('/addUser', (req, res) => {
-    const { id, nombre} = req.query;
-    users.push({id: parseInt(id), nombre})
-    res.status(200).send({ id, nombre });
+app.post('/addUser', (req, res) => {
+    const { id, name} = req.body;
+    users.push({id: parseInt(id), name})
+    res.status(200).send({ id, name });
   });
 
-  app.get('/updateUser', (req, res) => {
-    const { id,nombre } = req.query;
+  app.patch('/updateUser/:id', (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
     const user = users.find((us) => id == us.id)
-    user.name = nombre;
-    res.status(200).send({ id,nombre });
+    user.name = name;
+    res.status(200).send({ id,name });
   });
 
-  app.get('/deleteUser', (req, res) => {
-    const { id } = req.query;
+  app.delete('/deleteUser/:id', (req, res) => {
+    const { id } = req.params;
     users = users.filter((us) => id != us.id)
     
     res.status(200).send({ id });
