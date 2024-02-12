@@ -18,6 +18,12 @@ app.get('/', (req, res) => {
   res.send(users)
 })
 
+app.get('/getOnlyUser', (req, res) => {
+    const { id } = req.query;
+    const user = users.find((us) => id == us.id)
+    res.send(user)
+  })
+
 app.get('/addUser', (req, res) => {
     const { id, nombre} = req.query;
     users.push({id: parseInt(id), nombre})
